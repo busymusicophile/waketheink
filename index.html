@@ -16,12 +16,11 @@
         body, html {
             background-color: #FFF0F2; /* Soft pastel pink */
             font-family: 'Quicksand', sans-serif;
-            color: #6B4E51; /* Soft earthy rose-brown for readability */
+            color: #6B4E51;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        /* Container that blurs when a note is active */
         .main-content {
             transition: filter 0.5s ease;
         }
@@ -31,7 +30,7 @@
             pointer-events: none;
         }
 
-        /* Section 1: The Intro Messages */
+        /* Intro Text Style */
         .intro-section {
             min-height: 100vh;
             display: flex;
@@ -74,7 +73,7 @@
             animation: bounce 2s infinite;
         }
 
-        /* Section 2: The Jar Interactive Area */
+        /* Jar Section */
         .jar-section {
             min-height: 100vh;
             display: flex;
@@ -85,82 +84,83 @@
             padding: 20px;
         }
 
-        /* The Aesthetic Jar Component */
+        /* --- THE TRANSPARENT JAR --- */
         .jar-container {
             position: relative;
-            width: 180px;
-            height: 240px;
-            margin-bottom: 40px;
+            width: 200px;
+            height: 260px;
+            margin-bottom: 50px;
         }
 
-        /* The Lid */
+        /* The Cork Lid */
         .jar-lid {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 25px;
-            background-color: #D4A373; /* Wooden/cork texture color */
+            width: 110px;
+            height: 28px;
+            background-color: #D4A373; /* Cork Wood */
             border-radius: 6px 6px 4px 4px;
-            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.1);
+            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.15), 0 4px 6px rgba(0,0,0,0.05);
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 3;
+            z-index: 4;
         }
 
-        /* When jar opens, lid flies up and rotates slightly */
         .jar-container.open .jar-lid {
-            transform: translate(-50%, -60px) rotate(-15deg);
+            transform: translate(-50%, -70px) rotate(-15deg);
         }
 
-        /* The Jar Body */
+        /* Transparent Glass Body */
         .jar-body {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 220px;
-            background: rgba(255, 255, 255, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.7);
-            border-radius: 30px 30px 50px 50px;
-            box-shadow: 0 10px 30px rgba(224, 172, 175, 0.3), inset 0 0 20px rgba(255,255,255,0.6);
-            backdrop-filter: blur(2px);
+            height: 240px;
+            background: rgba(255, 255, 255, 0.15); /* Fully transparent base */
+            border: 3px solid rgba(255, 255, 255, 0.6); /* Glass highlight rim */
+            border-radius: 35px 35px 55px 55px;
+            box-shadow: 
+                0 15px 35px rgba(224, 172, 175, 0.25), 
+                inset 0 0 25px rgba(255, 255, 255, 0.5),
+                inset -10px -10px 20px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(1px);
             z-index: 2;
+            overflow: hidden; /* Keeps chits inside the jar body shape */
         }
 
-        /* The Coin-sized Slot */
+        /* Coin-sized opening marker at top */
         .jar-body::before {
             content: '';
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 8px;
-            background-color: rgba(107, 78, 81, 0.2);
+            width: 45px;
+            height: 6px;
+            background-color: rgba(107, 78, 81, 0.15);
             border-radius: 10px;
         }
 
-        /* Little decorative twine bow on the jar */
         .jar-twine {
             position: absolute;
-            top: 35px;
+            top: 38px;
             left: 50%;
             transform: translateX(-50%);
             width: 104%;
             height: 6px;
             background: #C39B9B;
             border-radius: 3px;
-            z-index: 2;
+            z-index: 3;
         }
 
-        /* Decorative label on the jar */
         .jar-label {
             position: absolute;
-            top: 80px;
+            top: 85px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 60px;
+            width: 110px;
+            height: 65px;
             background: #FFFDF9;
             border: 1px dashed #C39B9B;
             border-radius: 8px;
@@ -168,12 +168,44 @@
             justify-content: center;
             align-items: center;
             font-family: 'Dancing Script', cursive;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #8A5E63;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            z-index: 3; /* Sits cleanly on top of glass */
         }
 
-        /* The Trigger Button */
+        /* --- THE COLORFUL ROLLED CHITS INSIDE --- */
+        .chits-pile {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            height: 100px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: flex-end;
+            gap: 6px;
+            padding: 5px;
+        }
+
+        /* Small styled mini scrolls inside jar */
+        .mini-chit {
+            width: 32px;
+            height: 14px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            transform: rotate(var(--rot));
+            opacity: 0.95;
+        }
+        /* Pastel chit variations */
+        .c1 { background-color: #FFC6FF; border: 1px solid #E8AEFF; } /* Lilac */
+        .c2 { background-color: #FFADAD; border: 1px solid #FFA0A0; } /* Coral Rose */
+        .c3 { background-color: #CAFFBF; border: 1px solid #B8F2AD; } /* Mint */
+        .c4 { background-color: #9BF6FF; border: 1px solid #8AE5FF; } /* Sky Blue */
+        .c5 { background-color: #FDFFB6; border: 1px solid #EBEF9E; } /* Pastel Yellow */
+
+        /* Button Trigger */
         .btn-wake {
             background-color: #FFB3BC;
             color: white;
@@ -196,11 +228,7 @@
             background-color: #FFA1AC;
         }
 
-        .btn-wake:active {
-            transform: translateY(1px);
-        }
-
-        /* --- THE POP-UP NOTE CHIT --- */
+        /* --- OVERLAY POPUP CHIT --- */
         .overlay-container {
             position: fixed;
             top: 0;
@@ -222,17 +250,16 @@
         }
 
         .note-chit {
-            background: #FFFDF9; /* Paper color */
+            background: #FFFDF9; /* Vintage/warm paper slip color */
             width: 85%;
-            max-width: 400px;
-            min-height: 200px;
-            padding: 30px;
+            max-width: 420px;
+            padding: 35px 30px;
             border-radius: 4px;
-            box-shadow: 0 20px 50px rgba(107, 78, 81, 0.15);
+            box-shadow: 0 25px 60px rgba(107, 78, 81, 0.2);
             position: relative;
             transform: scale(0.3) translateY(150px) rotate(-10deg);
             transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            border-left: 5px solid #FFB3BC; /* Cute pastel edge */
+            border-left: 6px solid #FFADAD; /* Cute color accent edge */
         }
 
         .overlay-container.active .note-chit {
@@ -241,18 +268,19 @@
 
         .note-date {
             font-size: 0.85rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.5;
-            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            color: #A38487;
+            margin-bottom: 20px;
             display: block;
         }
 
         .note-content {
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.15rem;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            line-height: 1.7;
             color: #4A3537;
+            white-space: pre-line; /* Preserves line breaks from your input */
         }
 
         .close-btn {
@@ -260,17 +288,20 @@
             bottom: -60px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             border: none;
             color: #6B4E51;
-            padding: 8px 20px;
+            padding: 10px 24px;
             border-radius: 20px;
             font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: background 0.2s;
         }
 
-        /* Animations */
+        .close-btn:hover { background: #FFF; }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 0.8; transform: translateY(0); }
@@ -285,10 +316,7 @@
 </head>
 <body>
 
-    <!-- Main Scrollable Content -->
     <div class="main-content" id="mainContent">
-        
-        <!-- Section 1: Intro Text -->
         <section class="intro-section">
             <p class="msg-1">this might not seem like much but I really hope you like it</p>
             <p class="msg-2">all the days that I missed you I have written a note for you</p>
@@ -296,48 +324,64 @@
             <div class="scroll-hint">Scroll Down ↓</div>
         </section>
 
-        <!-- Section 2: Interactive Jar -->
         <section class="jar-section">
             <div class="jar-container" id="jarContainer">
                 <div class="jar-lid"></div>
                 <div class="jar-twine"></div>
                 <div class="jar-body">
-                    <div class="jar-label">Ink Notes</div>
+                    <div class="jar-label">Wake the Ink</div>
+                    
+                    <div class="chits-pile">
+                        <div class="mini-chit c1" style="--rot: -15deg"></div>
+                        <div class="mini-chit c2" style="--rot: 25deg"></div>
+                        <div class="mini-chit c3" style="--rot: -5deg"></div>
+                        <div class="mini-chit c4" style="--rot: 40deg"></div>
+                        <div class="mini-chit c5" style="--rot: -30deg"></div>
+                        <div class="mini-chit c2" style="--rot: 12deg"></div>
+                        <div class="mini-chit c1" style="--rot: -20deg"></div>
+                        <div class="mini-chit c4" style="--rot: 5deg"></div>
+                        <div class="mini-chit c3" style="--rot: 35deg"></div>
+                        <div class="mini-chit c5" style="--rot: -10deg"></div>
+                    </div>
                 </div>
             </div>
 
             <button class="btn-wake" onclick="wakeTheInk()">Wake the Ink</button>
         </section>
-
     </div>
 
-    <!-- The Pop-up Overlay for the Paper Chit -->
     <div class="overlay-container" id="overlayContainer">
         <div class="note-chit">
-            <span class="note-date" id="noteDate">MAY 22, 11:11 PM</span>
-            <p class="note-content" id="noteText">This is a placeholder note. Put your real feelings here!</p>
+            <span class="note-date" id="noteDate">DATE</span>
+            <p class="note-content" id="noteText">Note goes here...</p>
             <button class="close-btn" onclick="closeChit()">Put back in jar</button>
         </div>
     </div>
 
     <script>
-        // --- YOUR DATA BANK ---
-        // Just keep adding your daily notes right here inside the brackets!
-        // Format: { date: "WHEN", text: "YOUR DEAR DIARY NOTE" }
+        // 🔮 YOUR ACTUAL AUTHENTIC NOTES SYSTEM
         const missedNotes = [
             { 
-                date: "Monday, 4:30 PM", 
-                text: "Saw the clouds looking incredibly soft today and immediately wished we were sitting together talking about absolutely nothing." 
+                date: "18-05-2026", 
+                text: "who hurt this soul?!\nI wish I could travel back into the mist and guard this poor soul from all the severed scars...\nmay love, happiness, light... follow back into this dove's life" 
             },
             { 
-                date: "Wednesday, 11:11 PM", 
-                text: "Making a wish at 11:11 is just an excuse for me to think about your smile without feeling completely guilty about how much I miss you." 
+                date: "19-05-2026", 
+                text: "oh dear lord,\nhave mercy on this Spirit World. ethereal, his tone, Glistening in his eye, a creature of porcelain and light... this is what He is..." 
             },
             { 
-                date: "Friday, 9:00 AM", 
-                text: "Even on the busiest mornings, my mind always finds a sneaky little detour back to you. Hope your day is beautiful." 
+                date: "20-05-2026", 
+                text: "I am over the moon for a guy I met a month ago whose\ntouch felt like magic, with a power to heal...\na feeling I don't want to get addicted too...\nMAYBE LOVE?" 
             },
-            // 💡 Simply paste more lines here as you go!
+            { 
+                date: "21-05-2026", 
+                text: "That man?! fr? who sat you down and brought you back to life?\nYES! This is love, and He is mine... sounds soo whimsical as if my prayers were finally answered" 
+            },
+            { 
+                date: "22-05-2026", 
+                text: "kindness, love, care, It would be you if it had a face...\nI wish I can come running, just Pronk and cling onto you like a baby monkey...\nI fall for you each day" 
+            }
+            // 💡 FUTURE NOTES WILL GO RIGHT BELOW THIS LINE!
         ];
 
         const jarContainer = document.getElementById('jarContainer');
@@ -347,30 +391,23 @@
         const noteText = document.getElementById('noteText');
 
         function wakeTheInk() {
-            // 1. Pick a random note from your list
             const randomIndex = Math.floor(Math.random() * missedNotes.length);
             const selectedNote = missedNotes[randomIndex];
 
-            // 2. Inject text into the chit
-            noteDate.innerText = selectedNote.date.toUpperCase();
+            noteDate.innerText = selectedNote.date;
             noteText.innerText = selectedNote.text;
 
-            // 3. Trigger the "Jar Opening" animation
             jarContainer.classList.add('open');
 
-            // 4. Wait a brief moment for the lid to pop, then blur BG and fly the chit out
             setTimeout(() => {
                 mainContent.classList.add('blur-bg');
                 overlayContainer.classList.add('active');
-            }, 400); 
+            }, 450); 
         }
 
         function closeChit() {
-            // Reverse everything cleanly
             overlayContainer.classList.remove('active');
             mainContent.classList.remove('blur-bg');
-            
-            // Wait for chit to fade before closing the jar lid
             setTimeout(() => {
                 jarContainer.classList.remove('open');
             }, 300);
