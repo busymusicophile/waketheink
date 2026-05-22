@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wake the Ink ✨</title>
     <style>
-        /* Imported Caveat for that authentic handwritten diary look */
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Dancing+Script:wght@600&family=Quicksand:wght@400;500;600&display=swap');
 
         * {
@@ -15,42 +14,80 @@
         }
 
         body, html {
-            background-color: #FFF0F2; /* Soft pastel pink */
+            background-color: #FFF0F2; /* Softest milk pastel pink */
             font-family: 'Quicksand', sans-serif;
-            color: #6B4E51;
+            color: #7A5C5F; /* Subdued earthy rose for elegant text contrast */
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
         .main-content {
+            position: relative;
             transition: filter 0.5s ease;
+            min-height: 200vh;
+            z-index: 1;
         }
 
         .blur-bg {
-            filter: blur(8px);
+            filter: blur(12px); /* Slightly deeper blur for a high-end dreamy aesthetic */
             pointer-events: none;
         }
 
-        /* --- NEW: Minimalist Live Heartbeat Counter --- */
+        /* --- Minimalist Milk-Glass Live Counter --- */
         .heartbeat-counter {
             position: fixed;
-            top: 20px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(5px);
-            padding: 10px 24px;
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(10px);
+            padding: 12px 28px;
+            border-radius: 40px;
             font-size: 0.85rem;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #8A5E63;
-            box-shadow: 0 4px 15px rgba(224, 172, 175, 0.15);
+            box-shadow: 0 4px 20px rgba(224, 172, 175, 0.12);
             z-index: 5;
             text-align: center;
             white-space: nowrap;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
+
+        /* --- COHESIVE PASTEL STICKY NOTES --- */
+        .sticky-note {
+            position: absolute;
+            width: 135px;
+            min-height: 120px;
+            padding: 16px 14px;
+            font-family: 'Caveat', cursive;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            color: #5C4345;
+            box-shadow: 2px 8px 15px rgba(224, 172, 175, 0.15); /* Soft pink drop shadow */
+            transform: rotate(var(--rot));
+            z-index: 0;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border-radius: 2px;
+        }
+        .sticky-note:hover {
+            transform: rotate(var(--rot)) scale(1.08);
+            z-index: 3;
+        }
+        
+        /* Strict Muted Pastel Profiles */
+        .sticky-yellow { background-color: #FFFDF0; border-top: 4px solid #F4E8C1; } /* Warm Butter */
+        .sticky-blue   { background-color: #F0FAFF; border-top: 4px solid #C9E7F5; } /* Pale Ice Blue */
+        .sticky-green  { background-color: #F2FFF0; border-top: 4px solid #D0EBCB; } /* Soft Matcha Milk */
+        .sticky-purple { background-color: #FFF0FA; border-top: 4px solid #EBCDE0; } /* Lavender Whip */
+
+        /* Positions */
+        #note1 { top: 14%; left: 8%; --rot: -6deg; }
+        #note2 { top: 28%; right: 9%; --rot: 8deg; }
+        #note3 { top: 48%; left: 11%; --rot: -10deg; }
+        #note4 { top: 68%; right: 8%; --rot: 5deg; }
+        #note5 { top: 82%; left: 9%; --rot: -4deg; }
+        #note6 { top: 58%; right: 14%; --rot: -8deg; }
 
         /* Intro Text Style */
         .intro-section {
@@ -60,13 +97,15 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 80px 20px 40px 20px; /* Added top padding for counter clearance */
+            padding: 80px 20px 40px 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .msg-1 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-style: italic;
-            opacity: 0.8;
+            opacity: 0.65;
             margin-bottom: 80px;
             animation: fadeIn 2s ease;
         }
@@ -75,23 +114,24 @@
             font-size: 1.6rem;
             font-weight: 500;
             max-width: 600px;
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 40px;
+            letter-spacing: -0.3px;
         }
 
         .msg-3 {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             max-width: 500px;
-            line-height: 1.5;
-            opacity: 0.9;
-            margin-bottom: 50px;
+            line-height: 1.6;
+            opacity: 0.75;
+            margin-bottom: 60px;
         }
 
         .scroll-hint {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.6;
+            letter-spacing: 3px;
+            opacity: 0.45;
             animation: bounce 2s infinite;
         }
 
@@ -104,49 +144,48 @@
             align-items: center;
             position: relative;
             padding: 20px;
+            z-index: 2;
         }
 
-        /* --- THE TRANSPARENT JAR --- */
+        /* --- ELEVATED TRANSPARENT JAR --- */
         .jar-container {
             position: relative;
-            width: 200px;
-            height: 260px;
-            margin-bottom: 50px;
+            width: 210px;
+            height: 270px;
+            margin-bottom: 55px;
         }
 
-        /* The Cork Lid */
         .jar-lid {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 110px;
-            height: 28px;
-            background-color: #D4A373; 
+            width: 115px;
+            height: 26px;
+            background-color: #E6C5A8; /* Lighter, pastel tone cork wood */
             border-radius: 6px 6px 4px 4px;
-            box-shadow: inset 0 -3px 5px rgba(0,0,0,0.15), 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: inset 0 -3px 4px rgba(0,0,0,0.08), 0 4px 10px rgba(107,78,81,0.05);
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
             z-index: 4;
         }
 
         .jar-container.open .jar-lid {
-            transform: translate(-50%, -70px) rotate(-15deg);
+            transform: translate(-50%, -75px) rotate(-12deg);
         }
 
-        /* Transparent Glass Body */
         .jar-body {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 240px;
-            background: rgba(255, 255, 255, 0.15); 
-            border: 3px solid rgba(255, 255, 255, 0.6); 
-            border-radius: 35px 35px 55px 55px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.22); 
+            border: 2.5px solid rgba(255, 255, 255, 0.75); 
+            border-radius: 40px 40px 60px 60px;
             box-shadow: 
-                0 15px 35px rgba(224, 172, 175, 0.25), 
-                inset 0 0 25px rgba(255, 255, 255, 0.5),
-                inset -10px -10px 20px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(1px);
+                0 20px 40px rgba(224, 172, 175, 0.2), 
+                inset 0 0 30px rgba(255, 255, 255, 0.6),
+                inset -8px -8px 15px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(1.5px);
             z-index: 2;
             overflow: hidden; 
         }
@@ -157,97 +196,99 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 45px;
-            height: 6px;
-            background-color: rgba(107, 78, 81, 0.15);
+            width: 50px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.6);
             border-radius: 10px;
         }
 
         .jar-twine {
             position: absolute;
-            top: 38px;
+            top: 36px;
             left: 50%;
             transform: translateX(-50%);
-            width: 104%;
-            height: 6px;
-            background: #C39B9B;
+            width: 103%;
+            height: 4px;
+            background: #D9C3C3; /* Softer, low-contrast twine color */
             border-radius: 3px;
             z-index: 3;
         }
 
         .jar-label {
             position: absolute;
-            top: 85px;
+            top: 90px;
             left: 50%;
             transform: translateX(-50%);
-            width: 110px;
-            height: 65px;
+            width: 115px;
+            height: 60px;
             background: #FFFDF9;
-            border: 1px dashed #C39B9B;
+            border: 1px dashed #D9C3C3;
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Dancing Script', cursive;
-            font-size: 1.3rem;
-            color: #8A5E63;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            font-size: 1.25rem;
+            color: #9C787C;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(107,78,81,0.03);
             z-index: 3; 
         }
 
-        /* Colorful internal rolled chits */
+        /* Rolled Mini Chits Inside Base */
         .chits-pile {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            height: 100px;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
+            height: 90px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-content: flex-end;
-            gap: 6px;
-            padding: 5px;
+            gap: 5px;
+            padding: 4px;
         }
 
         .mini-chit {
-            width: 32px;
-            height: 14px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            width: 30px;
+            height: 13px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(107,78,81,0.04);
             transform: rotate(var(--rot));
-            opacity: 0.95;
+            opacity: 0.85;
         }
-        .c1 { background-color: #FFC6FF; border: 1px solid #E8AEFF; } 
-        .c2 { background-color: #FFADAD; border: 1px solid #FFA0A0; } 
-        .c3 { background-color: #CAFFBF; border: 1px solid #B8F2AD; } 
-        .c4 { background-color: #9BF6FF; border: 1px solid #8AE5FF; } 
-        .c5 { background-color: #FDFFB6; border: 1px solid #EBEF9E; } 
+        /* Coordinating the inside scrolls with background pastel palette */
+        .c1 { background-color: #FFF0FA; border: 1px solid #EBCDE0; } 
+        .c2 { background-color: #FFF2F2; border: 1px solid #F5D3D3; } 
+        .c3 { background-color: #F2FFF0; border: 1px solid #D0EBCB; } 
+        .c4 { background-color: #F0FAFF; border: 1px solid #C9E7F5; } 
+        .c5 { background-color: #FFFDF0; border: 1px solid #F4E8C1; } 
 
-        /* Button Trigger */
+        /* Premium Aesthetic Button */
         .btn-wake {
-            background-color: #FFB3BC;
+            background-color: #F5C6CB; /* Subdued dusky pastel rose */
             color: white;
             border: none;
-            padding: 16px 36px;
+            padding: 16px 40px;
             font-family: 'Quicksand', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 179, 188, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 198, 203, 0.35);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             z-index: 2;
         }
 
         .btn-wake:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(255, 179, 188, 0.6);
-            background-color: #FFA1AC;
+            box-shadow: 0 12px 28px rgba(245, 198, 203, 0.5);
+            background-color: #EDAEC4;
         }
 
-        /* --- OVERLAY POPUP CHIT --- */
+        /* --- PRETTY POPUP CHIT --- */
         .overlay-container {
             position: fixed;
             top: 0;
@@ -260,7 +301,7 @@
             z-index: 10;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .overlay-container.active {
@@ -269,16 +310,16 @@
         }
 
         .note-chit {
-            background: #FFFDF9; 
+            background: #FFFDF9; /* Warm milk-paper tone */
             width: 85%;
             max-width: 420px;
-            padding: 35px 30px;
-            border-radius: 4px;
-            box-shadow: 0 25px 60px rgba(107, 78, 81, 0.2);
+            padding: 40px 32px;
+            border-radius: 6px;
+            box-shadow: 0 30px 70px rgba(107, 78, 81, 0.12);
             position: relative;
-            transform: scale(0.3) translateY(150px) rotate(-10deg);
-            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            border-left: 6px solid #FFADAD; 
+            transform: scale(0.4) translateY(100px) rotate(-6deg);
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border-left: 5px solid #F5C6CB; 
         }
 
         .overlay-container.active .note-chit {
@@ -286,20 +327,19 @@
         }
 
         .note-date {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #A38487;
-            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: #B59A9D;
+            margin-bottom: 22px;
             display: block;
         }
 
-        /* ✍️ CHANGED: Fluid Handwriting Font for Note Content */
         .note-content {
             font-family: 'Caveat', cursive;
-            font-size: 1.65rem; /* Handwriting fonts need to be slightly larger to look natural */
-            line-height: 1.4;
+            font-size: 1.7rem; 
+            line-height: 1.45;
             color: #4A3537;
             white-space: pre-line; 
         }
@@ -311,37 +351,53 @@
             border-radius: 8px;
             margin-top: 15px;
             display: none; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
         .close-btn {
             position: absolute;
-            bottom: -60px;
+            bottom: -65px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.95);
             border: none;
-            color: #6B4E51;
-            padding: 10px 24px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            color: #7A5C5F;
+            padding: 10px 26px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(107,78,81,0.06);
+            transition: background 0.2s, transform 0.2s;
         }
 
-        .close-btn:hover { background: #FFF; }
+        .close-btn:hover { background: #FFF; transform: translateX(-50%) translateY(-1px); }
+
+        @media (max-width: 600px) {
+            .sticky-note {
+                width: 110px;
+                font-size: 1.15rem;
+                min-height: 105px;
+                padding: 12px 10px;
+            }
+            #note1 { left: 3%; top: 16%; }
+            #note2 { right: 3%; top: 30%; }
+            #note3 { left: 3%; top: 50%; }
+            #note4 { right: 3%; top: 70%; }
+            #note5 { left: 3%; top: 84%; }
+            #note6 { display: none; } 
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 0.8; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 0.65; transform: translateY(0); }
         }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
         }
     </style>
 </head>
@@ -350,6 +406,14 @@
     <div class="heartbeat-counter" id="liveTicker">In your orbit for: 0d 0h 0m 0s</div>
 
     <div class="main-content" id="mainContent">
+        
+        <div class="sticky-note sticky-yellow" id="note1">my lovely nigga 💖✨</div>
+        <div class="sticky-note sticky-blue" id="note2">my little motif 🕊️⏳</div>
+        <div class="sticky-note sticky-green" id="note3">may happiness and love, find its way back to you 🌸🍀</div>
+        <div class="sticky-note sticky-purple" id="note4">Late night calls & endless laughs 📞💤</div>
+        <div class="sticky-note sticky-yellow" id="note5">You = Pure Magic ✨🦋</div>
+        <div class="sticky-note sticky-blue" id="note6">Baby monkey hugs loading... 🐒❤️</div>
+
         <section class="intro-section">
             <p class="msg-1">this might not seem like much but I really hope you like it</p>
             <p class="msg-2">all the days that I missed you I have written a note for you</p>
@@ -425,25 +489,25 @@
         const noteImg = document.getElementById('noteImg');
         const noteVid = document.getElementById('noteVid');
 
-        // --- Live Ticker Logic (April 13, 2026 @ 19:20 / 7:20 PM) ---
+        // Live Counter Logic
         const startDate = new Date('2026-04-13T19:20:00');
 
-        function updateTicker() {
-            const now = new Date();
-            const difference = now - startDate;
+        document.addEventListener("DOMContentLoaded", function() {
+            function updateTicker() {
+                const now = new Date();
+                const difference = now - startDate;
 
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-            document.getElementById('liveTicker').innerText = 
-                `In your orbit for: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-        
-        // Run ticker every second
-        setInterval(updateTicker, 1000);
-        updateTicker();
+                document.getElementById('liveTicker').innerText = 
+                    `In your orbit for: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+            setInterval(updateTicker, 1000);
+            updateTicker();
+        });
 
         function wakeTheInk() {
             const randomIndex = Math.floor(Math.random() * missedNotes.length);
