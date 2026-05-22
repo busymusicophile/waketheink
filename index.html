@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wake the Ink ✨</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;500;600&display=swap');
+        /* Imported Caveat for that authentic handwritten diary look */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Dancing+Script:wght@600&family=Quicksand:wght@400;500;600&display=swap');
 
         * {
             box-sizing: border-box;
@@ -30,6 +31,27 @@
             pointer-events: none;
         }
 
+        /* --- NEW: Minimalist Live Heartbeat Counter --- */
+        .heartbeat-counter {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #8A5E63;
+            box-shadow: 0 4px 15px rgba(224, 172, 175, 0.15);
+            z-index: 5;
+            text-align: center;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
         /* Intro Text Style */
         .intro-section {
             min-height: 100vh;
@@ -38,7 +60,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px 20px;
+            padding: 80px 20px 40px 20px; /* Added top padding for counter clearance */
         }
 
         .msg-1 {
@@ -100,7 +122,7 @@
             transform: translateX(-50%);
             width: 110px;
             height: 28px;
-            background-color: #D4A373; /* Cork Wood */
+            background-color: #D4A373; 
             border-radius: 6px 6px 4px 4px;
             box-shadow: inset 0 -3px 5px rgba(0,0,0,0.15), 0 4px 6px rgba(0,0,0,0.05);
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -117,8 +139,8 @@
             bottom: 0;
             width: 100%;
             height: 240px;
-            background: rgba(255, 255, 255, 0.15); /* Fully transparent base */
-            border: 3px solid rgba(255, 255, 255, 0.6); /* Glass highlight rim */
+            background: rgba(255, 255, 255, 0.15); 
+            border: 3px solid rgba(255, 255, 255, 0.6); 
             border-radius: 35px 35px 55px 55px;
             box-shadow: 
                 0 15px 35px rgba(224, 172, 175, 0.25), 
@@ -126,10 +148,9 @@
                 inset -10px -10px 20px rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(1px);
             z-index: 2;
-            overflow: hidden; /* Keeps chits inside the jar body shape */
+            overflow: hidden; 
         }
 
-        /* Coin-sized opening marker at top */
         .jar-body::before {
             content: '';
             position: absolute;
@@ -171,10 +192,10 @@
             font-size: 1.3rem;
             color: #8A5E63;
             box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-            z-index: 3; /* Sits cleanly on top of glass */
+            z-index: 3; 
         }
 
-        /* --- THE COLORFUL ROLLED CHITS INSIDE --- */
+        /* Colorful internal rolled chits */
         .chits-pile {
             position: absolute;
             bottom: 10px;
@@ -189,7 +210,6 @@
             padding: 5px;
         }
 
-        /* Small styled mini scrolls inside jar */
         .mini-chit {
             width: 32px;
             height: 14px;
@@ -198,12 +218,11 @@
             transform: rotate(var(--rot));
             opacity: 0.95;
         }
-        /* Pastel chit variations */
-        .c1 { background-color: #FFC6FF; border: 1px solid #E8AEFF; } /* Lilac */
-        .c2 { background-color: #FFADAD; border: 1px solid #FFA0A0; } /* Coral Rose */
-        .c3 { background-color: #CAFFBF; border: 1px solid #B8F2AD; } /* Mint */
-        .c4 { background-color: #9BF6FF; border: 1px solid #8AE5FF; } /* Sky Blue */
-        .c5 { background-color: #FDFFB6; border: 1px solid #EBEF9E; } /* Pastel Yellow */
+        .c1 { background-color: #FFC6FF; border: 1px solid #E8AEFF; } 
+        .c2 { background-color: #FFADAD; border: 1px solid #FFA0A0; } 
+        .c3 { background-color: #CAFFBF; border: 1px solid #B8F2AD; } 
+        .c4 { background-color: #9BF6FF; border: 1px solid #8AE5FF; } 
+        .c5 { background-color: #FDFFB6; border: 1px solid #EBEF9E; } 
 
         /* Button Trigger */
         .btn-wake {
@@ -250,7 +269,7 @@
         }
 
         .note-chit {
-            background: #FFFDF9; /* Vintage/warm paper slip color */
+            background: #FFFDF9; 
             width: 85%;
             max-width: 420px;
             padding: 35px 30px;
@@ -259,7 +278,7 @@
             position: relative;
             transform: scale(0.3) translateY(150px) rotate(-10deg);
             transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            border-left: 6px solid #FFADAD; /* Cute color accent edge */
+            border-left: 6px solid #FFADAD; 
         }
 
         .overlay-container.active .note-chit {
@@ -267,7 +286,7 @@
         }
 
         .note-date {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -276,11 +295,23 @@
             display: block;
         }
 
+        /* ✍️ CHANGED: Fluid Handwriting Font for Note Content */
         .note-content {
-            font-size: 1.2rem;
-            line-height: 1.7;
+            font-family: 'Caveat', cursive;
+            font-size: 1.65rem; /* Handwriting fonts need to be slightly larger to look natural */
+            line-height: 1.4;
             color: #4A3537;
-            white-space: pre-line; /* Preserves line breaks from your input */
+            white-space: pre-line; 
+        }
+
+        .note-media {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .close-btn {
@@ -315,6 +346,8 @@
     </style>
 </head>
 <body>
+
+    <div class="heartbeat-counter" id="liveTicker">In your orbit for: 0d 0h 0m 0s</div>
 
     <div class="main-content" id="mainContent">
         <section class="intro-section">
@@ -354,12 +387,13 @@
         <div class="note-chit">
             <span class="note-date" id="noteDate">DATE</span>
             <p class="note-content" id="noteText">Note goes here...</p>
+            <img id="noteImg" class="note-media" src="" alt="Memory">
+            <video id="noteVid" class="note-media" src="" controls></video>
             <button class="close-btn" onclick="closeChit()">Put back in jar</button>
         </div>
     </div>
 
     <script>
-        // 🔮 YOUR ACTUAL AUTHENTIC NOTES SYSTEM
         const missedNotes = [
             { 
                 date: "18-05-2026", 
@@ -381,7 +415,6 @@
                 date: "22-05-2026", 
                 text: "kindness, love, care, It would be you if it had a face...\nI wish I can come running, just Pronk and cling onto you like a baby monkey...\nI fall for you each day" 
             }
-            // 💡 FUTURE NOTES WILL GO RIGHT BELOW THIS LINE!
         ];
 
         const jarContainer = document.getElementById('jarContainer');
@@ -389,6 +422,28 @@
         const overlayContainer = document.getElementById('overlayContainer');
         const noteDate = document.getElementById('noteDate');
         const noteText = document.getElementById('noteText');
+        const noteImg = document.getElementById('noteImg');
+        const noteVid = document.getElementById('noteVid');
+
+        // --- Live Ticker Logic (April 13, 2026 @ 19:20 / 7:20 PM) ---
+        const startDate = new Date('2026-04-13T19:20:00');
+
+        function updateTicker() {
+            const now = new Date();
+            const difference = now - startDate;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('liveTicker').innerText = 
+                `In your orbit for: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        
+        // Run ticker every second
+        setInterval(updateTicker, 1000);
+        updateTicker();
 
         function wakeTheInk() {
             const randomIndex = Math.floor(Math.random() * missedNotes.length);
@@ -396,6 +451,19 @@
 
             noteDate.innerText = selectedNote.date;
             noteText.innerText = selectedNote.text;
+
+            noteImg.style.display = 'none';
+            noteVid.style.display = 'none';
+            try { noteVid.pause(); } catch(e){}
+
+            if (selectedNote.image) {
+                noteImg.src = selectedNote.image;
+                noteImg.style.display = 'block';
+            }
+            if (selectedNote.video) {
+                noteVid.src = selectedNote.video;
+                noteVid.style.display = 'block';
+            }
 
             jarContainer.classList.add('open');
 
