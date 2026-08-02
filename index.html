@@ -318,7 +318,7 @@
             width: 90%;
             max-width: 440px;
             padding: 30px 28px 25px 28px;
-            border-radius: 6px;
+            border-radius: 12px;
             box-shadow: 0 30px 70px rgba(107, 78, 81, 0.12);
             position: relative;
             transform: scale(0.4) translateY(100px) rotate(-6deg);
@@ -335,7 +335,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #B59A9D;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: block;
         }
         .note-content {
@@ -356,20 +356,176 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
-        /* --- Spotify Playlist Player Styling --- */
-        .spotify-container {
-            margin-top: 12px;
-            padding-top: 10px;
-            border-top: 1px dashed #EED5D8;
-            text-align: center;
+        /* --- CUSTOM SPOTIFY CARD (MATCHING REFERENCE IMAGE) --- */
+        .custom-spotify-card {
+            background: #FFFDF9;
+            border: 1.5px solid #EED5D8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 8px 20px rgba(107, 78, 81, 0.04);
         }
 
-        .spotify-caption {
+        .spotify-top-banner {
             font-family: 'Caveat', cursive;
-            font-size: 1.25rem;
-            color: #7A5C5F;
-            margin-bottom: 6px;
-            line-height: 1.2;
+            font-size: 1.35rem;
+            color: #8C6A6E;
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .spotify-art-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #F8ECEE;
+            border: 2px solid #5C4345;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(92, 67, 69, 0.05);
+        }
+
+        .spotify-art-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .spotify-track-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .spotify-text-details h4 {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #5C4345;
+            margin-bottom: 3px;
+        }
+
+        .spotify-text-details p {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #9A787B;
+        }
+
+        .spotify-heart {
+            font-size: 1.4rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #5C4345;
+            transition: transform 0.2s;
+        }
+        .spotify-heart:hover { transform: scale(1.15); }
+
+        .spotify-playback-bar {
+            width: 100%;
+            height: 4px;
+            background: #EED5D8;
+            border-radius: 2px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .spotify-playback-progress {
+            width: 35%;
+            height: 100%;
+            background: #5C4345;
+            border-radius: 2px;
+        }
+
+        .spotify-time-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #A58488;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .spotify-controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            margin-bottom: 18px;
+            color: #5C4345;
+            font-size: 1rem;
+        }
+
+        .spotify-controls-row button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #5C4345;
+            font-size: 1.1rem;
+            transition: opacity 0.2s;
+        }
+        .spotify-controls-row button:hover { opacity: 0.7; }
+
+        .spotify-play-btn {
+            width: 36px;
+            height: 36px;
+            background: #5C4345 !important;
+            color: white !important;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem !important;
+            box-shadow: 0 4px 10px rgba(92, 67, 69, 0.2);
+        }
+
+        .spotify-bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px dashed #EED5D8;
+            padding-top: 12px;
+        }
+
+        .spotify-logo-icon {
+            font-size: 1.3rem;
+            color: #5C4345;
+        }
+
+        .spotify-soundwave {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            height: 18px;
+        }
+
+        .spotify-soundwave span {
+            display: block;
+            width: 3px;
+            background: #5C4345;
+            border-radius: 2px;
+            animation: waveAnim 1.2s infinite ease-in-out;
+        }
+        .spotify-soundwave span:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+        .spotify-soundwave span:nth-child(2) { height: 16px; animation-delay: 0.3s; }
+        .spotify-soundwave span:nth-child(3) { height: 11px; animation-delay: 0.2s; }
+        .spotify-soundwave span:nth-child(4) { height: 18px; animation-delay: 0.4s; }
+        .spotify-soundwave span:nth-child(5) { height: 7px; animation-delay: 0.15s; }
+        .spotify-soundwave span:nth-child(6) { height: 14px; animation-delay: 0.35s; }
+        .spotify-soundwave span:nth-child(7) { height: 10px; animation-delay: 0.25s; }
+        .spotify-soundwave span:nth-child(8) { height: 17px; animation-delay: 0.45s; }
+        .spotify-soundwave span:nth-child(9) { height: 9px; animation-delay: 0.1s; }
+        .spotify-soundwave span:nth-child(10) { height: 15px; animation-delay: 0.3s; }
+
+        @keyframes waveAnim {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.2); }
         }
 
         /* Action Buttons */
@@ -470,13 +626,48 @@
             <img id="noteImg" class="note-media" src="" alt="Memory">
             <video id="noteVid" class="note-media" src="" controls></video>
             
-            <!-- Spotify Playlist Embed Player -->
-            <div class="spotify-container">
-                <p class="spotify-caption">a small piece of your fav musiccc 🎶<br>love you 🤍</p>
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6AuuD0uJY46ASNZNnl9uE8?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <!-- Custom Spotify Card matching your visual request -->
+            <div class="custom-spotify-card">
+                <div class="spotify-top-banner">these are all the songs you have played ever since you have met me</div>
+                
+                <div class="spotify-art-box">
+                    <img id="spotifyAlbumArt" src="" alt="Album Cover">
+                </div>
+
+                <div class="spotify-track-info">
+                    <div class="spotify-text-details">
+                        <h4 id="spotifyTitle">Song Title</h4>
+                        <p id="spotifyArtist">Artist</p>
+                    </div>
+                    <button class="spotify-heart" onclick="toggleHeart(this)">🤍</button>
+                </div>
+
+                <div class="spotify-playback-bar">
+                    <div class="spotify-playback-progress"></div>
+                </div>
+                <div class="spotify-time-row">
+                    <span>1:11</span>
+                    <span>3:31</span>
+                </div>
+
+                <div class="spotify-controls-row">
+                    <button>🔀</button>
+                    <button>⏮️</button>
+                    <button class="spotify-play-btn" id="playPauseBtn" onclick="togglePlayState()">▶</button>
+                    <button>⏭️</button>
+                    <button>🔁</button>
+                </div>
+
+                <div class="spotify-bottom-bar">
+                    <div class="spotify-logo-icon">🟢</div>
+                    <div class="spotify-soundwave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
             </div>
 
-            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 18px;">
                 <button class="action-btn next-btn" onclick="nextChit()">Next Chit ✨</button>
                 <button class="action-btn close-btn" onclick="closeChit()">Put back in jar</button>
             </div>
@@ -484,24 +675,120 @@
     </div>
 
     <script>
-        // 🔮 YOUR AUTHENTIC NOTES SYSTEM
+        // 🔮 YOUR AUTHENTIC NOTES SYSTEM WITH MATCHING SONG DETAILS
         const missedNotes = [
-            { date: "18-05-2026", text: "who hurt this soul?!\nI wish I could travel back into the mist and guard this poor soul from all the severed scars...\nmay love, happiness, light... follow back into this dove's life" },
-            { date: "19-05-2026", text: "oh dear lord,\nhave mercy on this Spirit World. ethereal, his tone, Glistening in his eye, a creature of porcelain and light... this is what He is..." },
-            { date: "20-05-2026", text: "I am over the moon for a guy I met a month ago whose\ntouch felt like magic, with a power to heal...\na feeling I don't want to get addicted too...\nMAYBE LOVE?" },
-            { date: "21-05-2026", text: "That man?! fr? who sat you down and brought you back to life?\nYES! This is love, and He is mine... sounds soo whimsical as if my prayers were finally answered" },
-            { date: "22-05-2026", text: "kindness, love, care, It would be you if it had a face...\nI wish I can come running, just Pronk and cling onto you like a baby monkey...\nI fall for you each day" },
-            { date: "12-06-2026", text: "it's 3 in the morning...\nyou still with me...\nour random convsations are what keeps we alive..." },
-            { date: "15-06-2026", text: "you are my the one...\n how do I know?\nwell when you meet someone who can calm you donw\n knows exactly what to say...\n I'd say marry him" },
-            { date: "17-06-2026", text: "I'm missing you\n the frequency is too often\nshould I be scared of you?\nI kinda love your possessiveness..." },           
-            { date: "28-06-2026", text: "the day you met me?...\nthe way you held my hand...\nNEVER in my Life I have felt so gentle\nthank you for everything" },
-            { date: "30-06-2026", text: "kinderjoy?!!!\n seriously!? lol my inner child is just going nuts!!\nI am smiling like an idiot damn." },
-            { date: "5-07-2026", text: "rn I am wondering if you have forgotten about this?\nprob,but IDK\nI just fall for you everyday?\n find me an antidote please lol" },
-            { date: "8-07-2026", text: "I am overthinking...\nI know for sure I am attached to you\nwhat am I gonna do without you?\nI just wish I will always have you and never a part" },
-            { date: "9-07-2026", text: "lol all it takes for me to say purple\n I GET TO HAVE YOU?\nit's like the a lethal weapon\nONLY use it when its an EMERGENCY!!! loll" },
-            { date: "12-07-2026", text: "for FUCK SAKE\nyou know what I need?\ncall me ASAP and fight with me!!!!\nsay shit...\nlet me pull you closer" },
-            { date: "2-08-2026", text: "it was on tip of my tongue\nheard you laughing\nyou seemed too happy to disturb\nI love you tooo much to ruin it...\n you deserve all the happiness in the world" },
-            { date: "2-08-2026", text: "Why do you sacifice your sleep?\nI know you are sleepy I really do want you to sleep\nI just miss you a little too much dear to let you sleep\nyou being there for me today...\n means a LOT to me sweetheat\n I love you to the moon and back\n forever and always!!" },
+            { 
+                date: "18-05-2026", 
+                text: "who hurt this soul?!\nI wish I could travel back into the mist and guard this poor soul from all the severed scars...\nmay love, happiness, light... follow back into this dove's life",
+                songTitle: "Until I Found You",
+                artist: "Stephen Sanchez",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b2734994270f20c4314c449174e9"
+            },
+            { 
+                date: "19-05-2026", 
+                text: "oh dear lord,\nhave mercy on this Spirit World. ethereal, his tone, Glistening in his eye, a creature of porcelain and light... this is what He is...",
+                songTitle: "Golden Hour",
+                artist: "JVKE",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b2739474431e24bc38b81467ccdb"
+            },
+            { 
+                date: "20-05-2026", 
+                text: "I am over the moon for a guy I met a month ago whose\ntouch felt like magic, with a power to heal...\na feeling I don't want to get addicted too...\nMAYBE LOVE?",
+                songTitle: "Die For You",
+                artist: "The Weeknd",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b2738863bc11d2aa12b54f5aeb36"
+            },
+            { 
+                date: "21-05-2026", 
+                text: "That man?! fr? who sat you down and brought you back to life?\nYES! This is love, and He is mine... sounds soo whimsical as if my prayers were finally answered",
+                songTitle: "Enchanted",
+                artist: "Taylor Swift",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273a48964b5d9a3d636bcb893ec"
+            },
+            { 
+                date: "22-05-2026", 
+                text: "kindness, love, care, It would be you if it had a face...\nI wish I can come running, just Pronk and cling onto you like a baby monkey...\nI fall for you each day",
+                songTitle: "Cardigan",
+                artist: "Taylor Swift",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273bb5a9939d3c43dd3461bae04"
+            },
+            { 
+                date: "12-06-2026", 
+                text: "it's 3 in the morning...\nyou still with me...\nour random convsations are what keeps we alive...",
+                songTitle: "Exist For Love",
+                artist: "AURORA",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b27318dbb9668f44d9f7c00e1679"
+            },
+            { 
+                date: "15-06-2026", 
+                text: "you are my the one...\n how do I know?\nwell when you meet someone who can calm you donw\n knows exactly what to say...\n I'd say marry him",
+                songTitle: "Beyond",
+                artist: "Leon Bridges",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273b0213197179043e0682fb4ab"
+            },
+            { 
+                date: "17-06-2026", 
+                text: "I'm missing you\n the frequency is too often\nshould I be scared of you?\nI kinda love your possessiveness...",
+                songTitle: "The Way I Are",
+                artist: "Timbaland",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b27329cbceca1b2a95c47743d1a8"
+            },           
+            { 
+                date: "28-06-2026", 
+                text: "the day you met me?...\nthe way you held my hand...\nNEVER in my Life I have felt so gentle\nthank you for everything",
+                songTitle: "Invisible String",
+                artist: "Taylor Swift",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273bb5a9939d3c43dd3461bae04"
+            },
+            { 
+                date: "30-06-2026", 
+                text: "kinderjoy?!!!\n seriously!? lol my inner child is just going nuts!!\nI am smiling like an idiot damn.",
+                songTitle: "Telepatía",
+                artist: "Kali Uchis",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b27321a59074b76a6642e053ffcb"
+            },
+            { 
+                date: "5-07-2026", 
+                text: "rn I am wondering if you have forgotten about this?\nprob,but IDK\nI just fall for you everyday?\n find me an antidote please lol",
+                songTitle: "Cinnamon Girl",
+                artist: "Lana Del Rey",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273e05a3cffaa5b2ce8f416c14f"
+            },
+            { 
+                date: "8-07-2026", 
+                text: "I am overthinking...\nI know for sure I am attached to you\nwhat am I gonna do without you?\nI just wish I will always have you and never a part",
+                songTitle: "All Of Me",
+                artist: "John Legend",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b2736e65f3a097240c5f2fb96e8d"
+            },
+            { 
+                date: "9-07-2026", 
+                text: "lol all it takes for me to say purple\n I GET TO HAVE YOU?\nit's like the a lethal weapon\nONLY use it when its an EMERGENCY!!! loll",
+                songTitle: "Lavender Haze",
+                artist: "Taylor Swift",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273bb5a9939d3c43dd3461bae04"
+            },
+            { 
+                date: "12-07-2026", 
+                text: "for FUCK SAKE\nyou know what I need?\ncall me ASAP and fight with me!!!!\nsay shit...\nlet me pull you closer",
+                songTitle: "Eenie Meenie",
+                artist: "Sean Kingston & Justin Bieber",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273d63b251cc24f664539ef3878"
+            },
+            { 
+                date: "2-08-2026", 
+                text: "it was on tip of my tongue\nheard you laughing\you seemed too happy to disturb\nI love you tooo much to ruin it...\n you deserve all the happiness in the world",
+                songTitle: "Sure Thing",
+                artist: "Miguel",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b273418579cf4a5449fb0362ebfa"
+            },
+            { 
+                date: "2-08-2026", 
+                text: "Why do you sacifice your sleep?\nI know you are sleepy I really do want you to sleep\nI just miss you a little too much dear to let you sleep\nyou being there for me today...\n means a LOT to me sweetheat\n I love you to the moon and back\n forever and always!!",
+                songTitle: "The Only Exception",
+                artist: "Paramore",
+                albumArt: "https://i.scdn.co/image/ab67616d0000b2739cb315c10fae13cc24b7fa7f"
+            },
         ];
 
         const jarContainer = document.getElementById('jarContainer');
@@ -511,6 +798,10 @@
         const noteText = document.getElementById('noteText');
         const noteImg = document.getElementById('noteImg');
         const noteVid = document.getElementById('noteVid');
+        
+        const spotifyTitle = document.getElementById('spotifyTitle');
+        const spotifyArtist = document.getElementById('spotifyArtist');
+        const spotifyAlbumArt = document.getElementById('spotifyAlbumArt');
 
         // --- NON-REPEATING SHUFFLE QUEUE LOGIC ---
         let shuffledQueue = [];
@@ -548,6 +839,11 @@
 
             noteDate.innerText = selectedNote.date;
             noteText.innerText = selectedNote.text;
+
+            // Update Spotify Card Dynamic Fields
+            spotifyTitle.innerText = selectedNote.songTitle;
+            spotifyArtist.innerText = selectedNote.artist;
+            spotifyAlbumArt.src = selectedNote.albumArt;
 
             noteImg.style.display = 'none';
             noteVid.style.display = 'none';
@@ -590,6 +886,23 @@
             setTimeout(() => {
                 jarContainer.classList.remove('open');
             }, 300);
+        }
+
+        function toggleHeart(btn) {
+            if (btn.innerText === '🤍') {
+                btn.innerText = '💖';
+                btn.style.transform = 'scale(1.2)';
+            } else {
+                btn.innerText = '🤍';
+                btn.style.transform = 'scale(1)';
+            }
+        }
+
+        let isPlaying = false;
+        function togglePlayState() {
+            const btn = document.getElementById('playPauseBtn');
+            isPlaying = !isPlaying;
+            btn.innerText = isPlaying ? '❚❚' : '▶';
         }
     </script>
 </body>
