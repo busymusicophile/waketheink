@@ -1,457 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wake the Ink ✨</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Dancing+Script:wght@600&family=Quicksand:wght@400;500;600&display=swap');
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body, html {
-            background-color: #FFF0F2; /* Soft pastel pink background */
-            font-family: 'Quicksand', sans-serif;
-            color: #7A5C5F;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        .main-content {
-            position: relative;
-            transition: filter 0.5s ease;
-            min-height: 200vh;
-            z-index: 1;
-        }
-
-        .blur-bg {
-            filter: blur(12px);
-            pointer-events: none;
-        }
-
-        /* --- Live Heartbeat Ticker --- */
-        .heartbeat-counter {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(10px);
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            color: #8A5E63;
-            box-shadow: 0 4px 20px rgba(224, 172, 175, 0.12);
-            z-index: 5;
-            text-align: center;
-            white-space: nowrap;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-
-        /* --- BACKGROUND STICKY NOTES --- */
-        .sticky-note {
-            position: absolute;
-            width: 135px;
-            min-height: 120px;
-            padding: 16px 14px;
-            font-family: 'Caveat', cursive;
-            font-size: 1.35rem;
-            line-height: 1.2;
-            color: #5C4345;
-            box-shadow: 2px 8px 15px rgba(224, 172, 175, 0.1);
-            transform: rotate(var(--rot));
-            z-index: 0;
-            transition: transform 0.4s ease;
-            border-radius: 2px;
-        }
-        .sticky-note:hover { transform: rotate(var(--rot)) scale(1.08); z-index: 3; }
-
-        .sticky-yellow { background-color: #FFFDF0; border-top: 4px solid #F4E8C1; }
-        .sticky-blue { background-color: #F0FAFF; border-top: 4px solid #C9E7F5; }
-        .sticky-green { background-color: #F2FFF0; border-top: 4px solid #D0EBCB; }
-        .sticky-purple { background-color: #FFF0FA; border-top: 4px solid #EBCDE0; }
-
-        #note1 { top: 10%; left: 8%; --rot: -6deg; }
-        #note2 { top: 25%; right: 9%; --rot: 8deg; }
-        #note3 { top: 45%; left: 11%; --rot: -10deg; }
-        #note4 { top: 68%; right: 8%; --rot: 5deg; }
-        #note5 { top: 82%; left: 9%; --rot: -4deg; }
-
-        /* Intro Text Style */
-        .intro-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 80px 20px 40px 20px;
-            position: relative;
-            z-index: 2;
-        }
-        .msg-1 { font-size: 1.35rem; font-style: italic; opacity: 0.65; margin-bottom: 80px; animation: fadeIn 2s ease; }
-        .msg-2 { font-size: 1.6rem; font-weight: 500; max-width: 600px; line-height: 1.7; margin-bottom: 40px; }
-        .msg-3 { font-size: 1.15rem; max-width: 500px; line-height: 1.6; opacity: 0.75; margin-bottom: 60px; }
-        .scroll-hint { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; opacity: 0.45; animation: bounce 2s infinite; }
-
-        /* --- COZY INTERACTIVE TABLE SCENE --- */
-        .jar-section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-            padding-bottom: 60px;
-        }
-
-        /* 2D Cozy Table Setup */
-        .table-environment {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            height: 380px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            margin-bottom: 40px;
-        }
-
-        /* Wooden Table Base top line */
-        .wooden-table {
-            position: absolute;
-            bottom: 0;
-            width: 120%;
-            height: 40px;
-            background: #EAD5C3; /* Soft pastel light wood */
-            border-top: 4px solid #DFCAA7;
-            z-index: 1;
-        }
-
-        /* Aesthetic Lace/Cloth Overlay */
-        .table-cloth {
-            position: absolute;
-            bottom: 25px;
-            width: 85%;
-            height: 120px;
-            background: #FFFDF9;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 10px 25px rgba(224, 172, 175, 0.2);
-            border-bottom: 6px dashed #F5D3D3; /* Cute scalloped lace illusion */
-            z-index: 2;
-        }
-
-        /* --- THE 2D PASTEL GLASS JAR --- */
-        .jar-container {
-            position: relative;
-            width: 190px;
-            height: 260px;
-            bottom: 45px; /* Sits beautifully on the cloth */
-            z-index: 3;
-        }
-
-        /* Cork Lid */
-        .jar-lid {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 24px;
-            background-color: #E2C4A8;
-            border-radius: 5px 5px 3px 3px;
-            box-shadow: inset 0 -3px 4px rgba(0,0,0,0.06);
-            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 5;
-        }
-        .jar-container.open .jar-lid {
-            transform: translate(-50%, -75px) rotate(-12deg);
-        }
-
-        /* Glass Jar Body */
-        .jar-body {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 242px;
-            background: rgba(255, 255, 255, 0.3);
-            border: 3px solid rgba(255, 255, 255, 0.8);
-            border-radius: 35px 35px 50px 50px;
-            box-shadow: 0 15px 35px rgba(186, 143, 146, 0.15), 
-                        inset 0 0 25px rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(1px);
-            z-index: 3;
-            overflow: hidden;
-        }
-
-        /* Glass shine reflection streak */
-        .jar-body::after {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 12%;
-            width: 14px;
-            height: 80%;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 10px;
-            pointer-events: none;
-        }
-
-        /* Twine Wrapping around the neck */
-        .jar-twine {
-            position: absolute;
-            top: 32px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 96px;
-            height: 8px;
-            background: #D5B8B8;
-            border-radius: 2px;
-            z-index: 4;
-        }
-
-        /* Cute Pastel Blue Ribbon Bow matching your picture */
-        .ribbon-bow {
-            position: absolute;
-            top: 26px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 20px;
-            z-index: 6;
-        }
-        .ribbon-bow::before, .ribbon-bow::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 18px;
-            background: #D2E7F3; /* Soft pastel ribbon blue */
-            border: 1.5px solid #BDD7E7;
-            border-radius: 50% 50% 10% 50%;
-        }
-        .ribbon-bow::before { left: -14px; transform: rotate(-15deg); }
-        .ribbon-bow::after { right: -14px; transform: scaleX(-1) rotate(-15deg); }
-
-        /* Hanging Paper Label Tag */
-        .jar-label {
-            position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 60px;
-            background: #FFFDF7;
-            border: 1px dashed #CBB2B2;
-            border-radius: 6px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.2rem;
-            color: #8C6A6E;
-            box-shadow: 0 4px 10px rgba(107, 78, 81, 0.04);
-            z-index: 4;
-        }
-
-        /* Base Pile of Rolled Colorful Chits Inside */
-        .chits-pile {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
-            height: 95px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-content: flex-end;
-            gap: 5px;
-            padding: 4px;
-        }
-        .mini-chit {
-            width: 28px;
-            height: 12px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            transform: rotate(var(--rot));
-            opacity: 0.9;
-        }
-        .c1 { background-color: #FFF0FA; border: 1px solid #EBCDE0; }
-        .c2 { background-color: #FFF2F2; border: 1px solid #F5D3D3; }
-        .c3 { background-color: #F2FFF0; border: 1px solid #D0EBCB; }
-        .c4 { background-color: #F0FAFF; border: 1px solid #C9E7F5; }
-        .c5 { background-color: #FFFDF0; border: 1px solid #F4E8C1; }
-
-        /* Premium Aesthetic Button */
-        .btn-wake {
-            background-color: #F5C6CB;
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(245, 198, 203, 0.35);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            z-index: 4;
-        }
-        .btn-wake:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(245, 198, 203, 0.5);
-            background-color: #EDAEC4;
-        }
-
-        /* --- PRETTY POPUP CHIT --- */
-        .overlay-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .overlay-container.active { opacity: 1; pointer-events: auto; }
-
-        .note-chit {
-            background: #FFFDF9;
-            width: 85%;
-            max-width: 420px;
-            padding: 40px 32px;
-            border-radius: 6px;
-            box-shadow: 0 30px 70px rgba(107, 78, 81, 0.12);
-            position: relative;
-            transform: scale(0.4) translateY(100px) rotate(-6deg);
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            border-left: 5px solid #F5C6CB;
-        }
-        .overlay-container.active .note-chit { transform: scale(1) translateY(0) rotate(0deg); }
-
-        .note-date {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #B59A9D;
-            margin-bottom: 22px;
-            display: block;
-        }
-        .note-content {
-            font-family: 'Caveat', cursive;
-            font-size: 1.7rem;
-            line-height: 1.45;
-            color: #4A3537;
-            white-space: pre-line;
-        }
-        .note-media {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-top: 15px;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        }
-        .close-btn {
-            position: absolute;
-            bottom: -65px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            border: none;
-            color: #7A5C5F;
-            padding: 10px 26px;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(107, 78, 81, 0.06);
-            transition: background 0.2s, transform 0.2s;
-        }
-        .close-btn:hover { background: #FFF; transform: translateX(-50%) translateY(-1px); }
-
-        @media (max-width: 600px) {
-            .sticky-note { width: 110px; font-size: 1.15rem; min-height: 105px; padding: 12px 10px; }
-            #note1 { left: 3%; top: 14%; }
-            #note2 { right: 3%; top: 28%; }
-            #note3 { left: 3%; top: 48%; }
-            #note4 { right: 3%; top: 68%; }
-            #note5 { left: 3%; top: 84%; }
-            .table-environment { transform: scale(0.85); margin-bottom: 10px; }
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 0.65; transform: translateY(0); } }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }
-    </style>
-</head>
-<body>
-
-    <div class="heartbeat-counter" id="liveTicker">In your orbit for: 0d 0h 0m 0s</div>
-
-    <div class="main-content" id="mainContent">
-        <div class="sticky-note sticky-yellow" id="note1">my lovely nigga 💖✨</div>
-        <div class="sticky-note sticky-blue" id="note2">my little motif 🕊️⏳</div>
-        <div class="sticky-note sticky-green" id="note3">may happiness and love, find its way back to you 🌸🍀</div>
-        <div class="sticky-note sticky-purple" id="note4">Late night calls & endless laughs 📞💤</div>
-        <div class="sticky-note sticky-yellow" id="note5">You = Pure Magic ✨🦋</div>
-
-        <section class="intro-section">
-            <p class="msg-1">this might not seem like much but I really hope you like it</p>
-            <p class="msg-2">all the days that I missed you I have written a note for you</p>
-            <p class="msg-3">everytime you miss me, dosent matter if I am with you or not</p>
-            <div class="scroll-hint">Scroll Down ↓</div>
-        </section>
-
-        <section class="jar-section">
-            <div class="table-environment">
-                <div class="wooden-table"></div>
-                <div class="table-cloth"></div>
-                
-                <div class="jar-container" id="jarContainer">
-                    <div class="jar-lid"></div>
-                    <div class="jar-twine"></div>
-                    <div class="ribbon-bow"></div>
-                    <div class="jar-body">
-                        <div class="jar-label">Wake the Ink</div>
-                        <div class="chits-pile">
-                            <div class="mini-chit c1" style="--rot: -15deg"></div>
-                            <div class="mini-chit c2" style="--rot: 25deg"></div>
-                            <div class="mini-chit c3" style="--rot: -5deg"></div>
-                            <div class="mini-chit c4" style="--rot: 40deg"></div>
-                            <div class="mini-chit c5" style="--rot: -30deg"></div>
-                            <div class="mini-chit c2" style="--rot: 12deg"></div>
-                            <div class="mini-chit c1" style="--rot: -20deg"></div>
-                            <div class="mini-chit c4" style="--rot: 5deg"></div>
-                            <div class="mini-chit c3" style="--rot: 35deg"></div>
-                            <div class="mini-chit c5" style="--rot: -10deg"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="btn-wake" onclick="wakeTheInk()">Wake the Ink</button>
-        </section>
-    </div>
-
-    <div class="overlay-container" id="overlayContainer">
+<div class="overlay-container" id="overlayContainer">
         <div class="note-chit">
             <span class="note-date" id="noteDate">DATE</span>
             <p class="note-content" id="noteText">Note goes here...</p>
             <img id="noteImg" class="note-media" src="" alt="Memory">
             <video id="noteVid" class="note-media" src="" controls></video>
-            <button class="close-btn" onclick="closeChit()">Put back in jar</button>
+            
+            <!-- Button Container for Next & Close -->
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 25px;">
+                <button class="action-btn next-btn" onclick="nextChit()">Next Chit ✨</button>
+                <button class="action-btn close-btn" onclick="closeChit()">Put back in jar</button>
+            </div>
         </div>
     </div>
 
@@ -462,8 +20,8 @@
             { date: "19-05-2026", text: "oh dear lord,\nhave mercy on this Spirit World. ethereal, his tone, Glistening in his eye, a creature of porcelain and light... this is what He is..." },
             { date: "20-05-2026", text: "I am over the moon for a guy I met a month ago whose\ntouch felt like magic, with a power to heal...\na feeling I don't want to get addicted too...\nMAYBE LOVE?" },
             { date: "21-05-2026", text: "That man?! fr? who sat you down and brought you back to life?\nYES! This is love, and He is mine... sounds soo whimsical as if my prayers were finally answered" },
-            { date: "22-05-2026", text: "kindness, love, care, It would be you if it had a face...\nI wish I can come running, just Pronk and cling onto you like a baby monkey...\nI fall for you each day" }, // <-- Added comma here
-            { date: "12-06-2026", text: "it's 3 in the morning...\nyou still with me...\nour random convsations are what keeps we alive..." }, // <-- Added comma here
+            { date: "22-05-2026", text: "kindness, love, care, It would be you if it had a face...\nI wish I can come running, just Pronk and cling onto you like a baby monkey...\nI fall for you each day" },
+            { date: "12-06-2026", text: "it's 3 in the morning...\nyou still with me...\nour random convsations are what keeps we alive..." },
             { date: "15-06-2026", text: "you are my the one...\n how do I know?\nwell when you meet someone who can calm you donw\n knows exactly what to say...\n I'd say marry him" },
             { date: "17-06-2026", text: "I'm missing you\n the frequency is too often\nshould I be scared of you?\nI kinda love your possessiveness..." },           
             { date: "28-06-2026", text: "the day you met me?...\nthe way you held my hand...\nNEVER in my Life I have felt so gentle\nthank you for everything" },
@@ -474,7 +32,7 @@
             { date: "12-07-2026", text: "for FUCK SAKE\nyou know what I need?\ncall me ASAP and fight with me!!!!\nsay shit...\nlet me pull you closer" },
             { date: "2-08-2026", text: "it was on tip of my tongue\nheard you laughing\nyou seemed too happy to disturb\nI love you tooo much to ruin it...\n you deserve all the happiness in the world" },
             { date: "2-08-2026", text: "Why do you sacifice your sleep?\nI know you are sleepy I really do want you to sleep\nI just miss you a little too much dear to let you sleep\nyou being there for me today...\n means a LOT to me sweetheat\n I love you to the moon and back\n forever and always!!" },
-            ];
+        ];
 
         const jarContainer = document.getElementById('jarContainer');
         const mainContent = document.getElementById('mainContent');
@@ -483,6 +41,23 @@
         const noteText = document.getElementById('noteText');
         const noteImg = document.getElementById('noteImg');
         const noteVid = document.getElementById('noteVid');
+
+        // --- NON-REPEATING SHUFFLE QUEUE LOGIC ---
+        let shuffledQueue = [];
+
+        function getShuffledIndex() {
+            if (shuffledQueue.length === 0) {
+                // Create an array of indexes [0, 1, 2, ..., N-1]
+                shuffledQueue = Array.from({ length: missedNotes.length }, (_, i) => i);
+                // Fisher-Yates Shuffle Algorithm
+                for (let i = shuffledQueue.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffledQueue[i], shuffledQueue[j]] = [shuffledQueue[j], shuffledQueue[i]];
+                }
+            }
+            // Pull and remove the last item from the queue
+            return shuffledQueue.pop();
+        }
 
         // Live Counter Logic (April 13, 2026 @ 7:20 PM)
         const startDate = new Date('2026-04-13T19:20:00');
@@ -500,9 +75,9 @@
             updateTicker();
         });
 
-        function wakeTheInk() {
-            const randomIndex = Math.floor(Math.random() * missedNotes.length);
-            const selectedNote = missedNotes[randomIndex];
+        function displayCurrentNote() {
+            const index = getShuffledIndex();
+            const selectedNote = missedNotes[index];
 
             noteDate.innerText = selectedNote.date;
             noteText.innerText = selectedNote.text;
@@ -519,12 +94,28 @@
                 noteVid.src = selectedNote.video;
                 noteVid.style.display = 'block';
             }
+        }
 
+        function wakeTheInk() {
+            displayCurrentNote();
             jarContainer.classList.add('open');
             setTimeout(() => {
                 mainContent.classList.add('blur-bg');
                 overlayContainer.classList.add('active');
             }, 450); 
+        }
+
+        function nextChit() {
+            // Adds a subtle scale/fade effect when switching notes inside the modal
+            const noteChit = document.querySelector('.note-chit');
+            noteChit.style.transform = 'scale(0.95) translateY(10px)';
+            noteChit.style.opacity = '0.7';
+
+            setTimeout(() => {
+                displayCurrentNote();
+                noteChit.style.transform = 'scale(1) translateY(0)';
+                noteChit.style.opacity = '1';
+            }, 200);
         }
 
         function closeChit() {
@@ -535,5 +126,3 @@
             }, 300);
         }
     </script>
-</body>
-</html>
